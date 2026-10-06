@@ -50,7 +50,8 @@ textarea,input[type=text],input[type=email]{width:100%;background:#00000055;colo
 .m small{color:var(--mut);font-size:12px}
 .bar{height:8px;border-radius:9px;background:#ffffff14;margin:6px 0 3px;overflow:hidden}
 .bar i{display:block;height:100%;border-radius:9px;width:0;transition:width .9s}
-mark{border-radius:5px;padding:0 3px;color:#111}.w{background:var(--warn)}.b{background:var(--bad)}
+mark{border-radius:5px;padding:0 3px;color:#111}.w{background:var(--warn)}.b{background:var(--bad)}.g{background:var(--ok)}
+.tipbox{margin-top:16px;padding:12px 14px;border-left:3px solid var(--ac);background:#2EC4B60d;border-radius:0 12px 12px 0;font-size:15px}
 .tr{background:#00000040;border-radius:12px;padding:12px;font-size:15px;line-height:1.7}
 .lock{border:1px dashed var(--ac);background:#2EC4B60d;border-radius:16px;padding:18px;margin-top:18px}
 .lock label{display:flex;gap:8px;font-size:12px;color:var(--mut);margin:6px 0 12px;align-items:flex-start}
@@ -101,6 +102,8 @@ footer{font-size:12px;color:var(--mut);margin-top:26px}
     <div id="bars"></div>
     <div class="err" id="warn" hidden></div>
 
+    <p class="tipbox"><b>Your top fix:</b> <span id="tip"></span></p>
+
     <div class="lock" id="lock">
       <h3 style="margin-top:0">Unlock your full coaching report</h3>
       <p style="font-size:14px;color:var(--mut);margin-bottom:8px">See your transcript with problem words highlighted, plain-English swaps, the key ideas you missed, and Coach Mic's model answer.</p>
@@ -108,7 +111,7 @@ footer{font-size:12px;color:var(--mut);margin-top:26px}
         <input type="text" id="nm" placeholder="First name" autocomplete="given-name" required>
         <input type="email" id="em" placeholder="Email address" autocomplete="email" required>
         <input class="hp" type="text" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <label><input type="checkbox" id="ok" required><span>I agree to receive my report and occasional bookkeeping tips from MiCreative. I can unsubscribe anytime.</span></label>
+        <label><input type="checkbox" id="ok" required><span>I agree to receive occasional bookkeeping tips and updates from MiCreative. I can unsubscribe anytime.</span></label>
         <div class="err" id="lerr" hidden></div>
         <button class="btn" id="lb" type="submit">Show my full report</button>
       </form>
@@ -119,8 +122,9 @@ footer{font-size:12px;color:var(--mut);margin-top:26px}
       <p class="fine"><mark class="w">hedge or filler</mark> <mark class="b">jargon</mark></p>
       <h3>Key ideas the client needed to hear</h3><ul class="l" id="ideas"></ul>
       <h3>Plain-English swaps</h3><ul class="l" id="swaps"></ul>
-      <h3>Fix this first</h3><p id="tip" style="font-size:15px"></p>
-      <h3>Coach Mic's model answer</h3><div class="tr" id="model"></div>
+            <h3>Coach Mic's model answer</h3><div class="tr" id="model"></div>
+      <p class="fine"><mark class="g">structure and client-care words</mark> the drill rewards</p>
+      <h3>Why this answer works</h3><ul class="l" id="why"></ul>
       <p style="margin-top:10px"><button class="ghost" id="hearm">Hear it</button></p>
     </div>
 
@@ -129,7 +133,7 @@ footer{font-size:12px;color:var(--mut);margin-top:26px}
       <p>Bookkeeper Ready™ gives you a 28-day speaking track, live client simulations and AI coaching from Coach Mic.</p>
       <a class="btn" id="cta" target="_blank" rel="noopener">Join Bookkeeper Ready™</a>
     </div>
-    <p style="margin-top:18px"><button class="btn" id="again">Try another question</button></p>
+    <p style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="retry">Try this question again</button><button class="ghost" id="again">Try another question</button></p>
   </div>
 </section>
 
@@ -153,25 +157,25 @@ const SC=[
   ['How you differ from an accountant (taxes, strategy)',[/accountant|cpa/,/tax|strateg|advis|filing|planning|year[- ]end/]],
   ['Your work keeps numbers accurate and ready for tax time',[/accurate|clean|ready|up[- ]to[- ]date|on time|organi[sz]ed|tax time|hand (it )?(off|over)|prepar/]],
   ['The client gets visibility into their business',[/report|cash ?flow|profit|know (where|how|what)|visibility|see (where|how)|decision/]]],
- model:"Great question. I keep your day-to-day numbers accurate. I record every sale and expense, match them to your bank, and send you simple reports so you always know where you stand. Your accountant uses those clean numbers for taxes and bigger-picture advice. So I keep the books clean, and they help you plan and file."},
+ model:"Great question. First, I keep your day-to-day numbers accurate: I record every sale and expense and match them to your bank. Then I'll send you simple reports, so you always know where you stand. Your accountant uses those clean numbers for taxes and bigger-picture advice. That means I keep your books clean, and they help you plan and file."},
 {id:'profit-cash',tag:'Money talk',q:"My profit looks great but my bank account is empty. What's going on?",
  ideas:[['Profit and cash are not the same thing',[/profit/,/cash|bank/,/not the same|different|isn'?t|aren'?t|doesn'?t|not cash/]],
   ['Unpaid invoices: customers still owe you',[/unpaid|owe|invoice|receivable|haven'?t (been )?paid|waiting/]],
   ['Money left for things that are not expenses (loans, owner draws, inventory)',[/draw|loan|principal|inventory|equipment|distribut|pay yourself/]],
   ['A clear next step, like a cash flow summary',[/cash ?flow (report|statement|summary|forecast)|walk (you )?through|review|look at|show you|send you/]]],
- model:"That's frustrating, and it's really common. Profit and cash aren't the same thing. Some of your sales are still unpaid invoices, and money also left for things like loan payments, owner draws or inventory that don't show up as expenses. I'll send you a simple cash flow summary this week so you can see exactly where each dollar went."},
+ model:"That's frustrating, and it's really common. First, profit and cash aren't the same thing. Then, because some of your sales are still unpaid invoices, that money hasn't reached your bank yet. Money also left for loan payments, owner draws or inventory, which aren't expenses. For example, the principal on a loan payment shrinks your cash but not your profit. I'll send you a simple cash flow summary so you can see exactly where each dollar went."},
 {id:'bank-access',tag:'Building trust',q:"Why do you need access to my bank account? That feels risky.",
  ideas:[['You acknowledged the concern',[/understand|makes sense|fair|valid|good question|smart|security|careful|right to ask|concern/]],
   ['Read-only access: you cannot move money',[/read[- ]only|view[- ]only|can'?t (move|transfer|withdraw|touch)|cannot (move|transfer|withdraw)|only (see|view)/]],
   ['Why you need it: accurate records without chasing statements',[/transaction|statement|match|record|accurate|bank feed|categori[sz]/]],
   ['The client stays in control and can remove access',[/stay in control|you control|revoke|remove (my )?access|secure|encrypted|bank[- ]grade|any ?time/]]],
- model:"That's a smart thing to ask. I only need read-only access. I can see transactions, but I can't move or withdraw a single dollar. That lets me record everything accurately without asking you to send statements every month. And you stay in control: you can remove my access any time."},
+ model:"That's a smart thing to ask, and I understand the concern. First, I only need read-only access, which means I can see transactions but can't move or withdraw a single dollar. Then, because I can see your transactions, I record everything accurately without asking you for statements each month. And you stay in control: you can remove my access any time."},
 {id:'value',tag:'Handling price',q:"Why should I pay you when I can just do my own books in a spreadsheet?",
  ideas:[["Their time is worth more elsewhere",[/time|hours|focus|spend|busy|your business|grow/]],
   ['Small mistakes cost real money',[/mistake|error|accurate|miss|penalt|audit|duplicate|miscategori/]],
   ['Better tax and business decisions',[/tax|deduction|write[- ]?off|decision|cash ?flow|report|profit/]],
   ['A low-risk next step',[/trial|start|small|one month|clean[- ]?up|look at|review|walk|call|free|let'?s/]]],
- model:"A spreadsheet can work, and I'd never tell you it can't. The question is what your time is worth. Small mistakes, like a missed expense or a duplicate, add up to higher taxes and wrong decisions. I'll take this off your plate so you can focus on customers. Let's start with a one-month cleanup and see if it saves you time."}
+ model:"A spreadsheet can work, and I'd never tell you it can't. First, think about what your time is worth. Then, because small mistakes like a missed expense or a duplicate lead to higher taxes and wrong decisions, I'll take this off your plate so you can focus on customers. I'm happy to start with a one-month cleanup and see if it saves you time."}
 ];
 const JARGON=[[/reconcil\w*/i,'matching your books to your bank'],[/accrual/i,'recording income and bills when they happen'],[/general ledger|\bgl\b/i,'the master record of every transaction'],[/chart of accounts/i,'the list of categories for your money'],[/journal entr\w+/i,'adjustments in your books'],[/\bdebits?\b|\bcredits?\b/i,'money-in and money-out entries'],[/amorti[sz]\w*|depreciat\w*/i,'spreading a big cost over several years'],[/accounts? receivable/i,'money customers still owe you'],[/accounts? payable/i,'bills you still need to pay'],[/\bcogs\b|cost of goods sold/i,'what it cost you to make what you sold'],[/balance sheet/i,'a snapshot of what you own and owe'],[/trial balance|double[- ]entry|gaap/i,'say what it does instead of its name'],[/liabilit\w+/i,'what you owe'],[/p&l|profit and loss/i,'your income minus expenses report']];
 const FILL=/\b(um+|uh+|er+|you know|basically|literally|actually|i mean|honestly)\b/gi;
@@ -200,6 +204,7 @@ function err(m){$('err').hidden=!m;$('err').textContent=m||''}
 function pick(i){S=SC[i];halt();$('q').textContent='“'+S.q+'”';$('ta').value='';$('typebox').hidden=true;spoken=true;$('live').textContent='Your words will appear here as you speak.';$('tm').textContent='0:00';$('go').textContent='Start recording';$('go').className='btn';err('');show('drill');track('drill_start',{id:S.id})}
 $('back').onclick=()=>{halt();show('intro')};
 $('again').onclick=()=>{halt();show('intro')};
+$('retry').onclick=()=>pick(SC.indexOf(S));
 $('hear').onclick=()=>speak(S.q);
 $('hearm').onclick=()=>speak(S.model);
 function speak(t){if(!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';speechSynthesis.speak(u)}
@@ -258,11 +263,11 @@ function analyze(text,secs,sp){
    {k:'answer',label:'Answer',v:cl(cov/S.ideas.length*100),note:`${cov} of ${S.ideas.length} key ideas covered`},
    {k:'clarity',label:'Clarity',v:cl(35+Math.min(30,cues.size*10)+pace+len),note:(wpm?wpm+' words/min · ':'')+cues.size+' structure word'+(cues.size===1?'':'s')},
    {k:'plain',label:'Plain English',v:cl(100-jar.reduce((a,j)=>a+(j.explained?5:14),0)),note:jar.length?jar.length+' jargon term'+(jar.length>1?'s':''):'No jargon'},
-   {k:'conf',label:'Confidence',v:cl(100-hedge.length*9-fill.length*6-(n<30?20:0)-(wpm&&wpm<95?10:0)),note:(hedge.length+fill.length)+' hedge or filler phrase'+(hedge.length+fill.length===1?'':'s')},
+   {k:'conf',label:'Confidence',v:cl(100-hedge.length*9-fill.length*6-(n<30?20:0)-(wpm&&wpm<95?10:0)),note:(hedge.length+fill.length)+' hedge or filler phrase'+(hedge.length+fill.length===1?'':'s')+(n<30?' · short answer, aim for 40–90 words':'')},
    {k:'care',label:'Client care',v:cl(25+Math.min(35,you/n*700)+Math.min(30,care.length*15)+askBack),note:`${you} “you/your”, ${care.length} reassurance phrase${care.length===1?'':'s'}`}];
   const wt={answer:.3,clarity:.22,plain:.16,conf:.16,care:.16};
-  let overall=cl(ms.reduce((a,x)=>a+x.v*wt[x.k],0));const off=cov===0;if(off)overall=Math.min(overall,35);
-  return{text,ms,overall,off,got,jar,wpm,hedge,fill};
+  let overall=cl(ms.reduce((a,x)=>a+x.v*wt[x.k],0));const off=cov===0,short=n<30;if(short)overall=Math.min(overall,70);if(off)overall=Math.min(overall,35);
+  return{text,ms,overall,off,short,got,jar,wpm,hedge,fill};
 }
 function run(text,secs,sp){
   const n=words(text).length;
@@ -276,7 +281,8 @@ function render(){
   $('num').textContent=o;$('arc').style.stroke=colr(o);$('arc').style.strokeDashoffset=339.3;
   requestAnimationFrame(()=>requestAnimationFrame(()=>$('arc').style.strokeDashoffset=339.3*(1-o/100)));
   $('tier').textContent=o>=85?'Client-ready':o>=70?'Almost there':o>=50?'Getting warmer':'Needs more reps';
-  $('verdict').textContent=R.off?'Your answer did not address what the client asked, so the score is capped.':`Strongest: ${best.label}. Work on ${worst.label} first.`;
+  const hist=ls.get('br_hist')||{},prev=hist[S.id];hist[S.id]=o;ls.set('br_hist',hist);
+  $('verdict').textContent=(R.off?'Your answer did not address what the client asked, so the score is capped.':R.short?'Your answer was short, so the score is capped at 70. Aim for 40–90 words, about 20 to 35 seconds.':`Strongest: ${best.label}. Work on ${worst.label} first.`)+(prev!=null?` (${o-prev>=0?'+':''}${o-prev} vs your last try)`:'');
   $('bars').innerHTML=R.ms.map(m=>`<div class="m"><div class="t"><span>${m.label}</span><span style="color:${colr(m.v)}">${m.v}</span></div><div class="bar"><i data-w="${m.v}" style="background:${colr(m.v)}"></i></div><small>${m.note}</small></div>`).join('');
   requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll('.bar i').forEach(i=>i.style.width=i.dataset.w+'%')));
   $('warn').hidden=!R.off;$('warn').textContent='Re-read the client’s question and try again. Start by answering it directly in your first sentence.';
@@ -285,10 +291,13 @@ function render(){
   $('tr').innerHTML=hl(R.text);
   $('ideas').innerHTML=S.ideas.map((x,i)=>`<li>${R.got[i]?'<span style="color:var(--ok)">Covered</span>':'<span style="color:var(--bad)">Missed</span>'} · ${x[0]}</li>`).join('');
   $('swaps').innerHTML=R.jar.length?R.jar.map(j=>`<li><mark class="b">${esc(j.term)}</mark> → say “${j.swap}”${j.explained?' (you explained it, nice)':''}</li>`).join(''):'<li>No unexplained jargon. Nice work.</li>';
-  $('tip').textContent=tips[worst.k];$('model').textContent=S.model;
+  $('tip').textContent=tips[worst.k];$('model').innerHTML=hlg(S.model);
+  const lm=S.model.toLowerCase(),mc=[...new Set(lm.match(CUES)||[])],mcare=[...new Set(lm.match(CARE)||[])],my=words(S.model).filter(x=>/^you(r|'re|'ll|rs)?$/.test(x)).length;
+  $('why').innerHTML=`<li><b>Covers all ${S.ideas.length} key ideas:</b> ${S.ideas.map(x=>x[0].charAt(0).toLowerCase()+x[0].slice(1)).join('; ')}.</li><li><b>Clear structure:</b> uses “${mc.join('”, “')}” to keep the answer in order.</li><li><b>Client care:</b> says “you/your” ${my} times${mcare.length?' and reassures with “'+mcare.join('”, “')+'”':''}.</li><li><b>Plain English:</b> no accounting jargon.</li>`;
   const saved=ls.get('br_lead');$('lock').hidden=!!saved;$('full').hidden=!saved;
   if(saved)$('nm').value=saved.name;
 }
+function hlg(t){let h=esc(t);[CUES,CARE].forEach(r=>{h=h.replace(new RegExp(r.source,'gi'),x=>`<mark class="g">${x}</mark>`)});return h}
 function hl(t){let h=esc(t);
   JARGON.forEach(([r])=>{h=h.replace(new RegExp(r.source,'gi'),x=>`<mark class="b">${x}</mark>`)});
   [FILL,HEDGE].forEach(r=>{h=h.replace(new RegExp(r.source,'gi'),x=>`<mark class="w">${x}</mark>`)});return h}
