@@ -119,7 +119,7 @@ footer{font-size:12px;color:var(--mut);margin-top:26px}
 
     <div id="full" hidden>
       <h3>What you said</h3><div class="tr" id="tr"></div>
-      <p class="fine"><mark class="w">hedge or filler</mark> <mark class="b">jargon</mark></p>
+      <p class="fine"><mark class="w">hedge or filler</mark> <mark class="b">jargon</mark> · Practice estimate. Speech recognition can mishear words, so treat scores as a guide.</p>
       <h3>Key ideas the client needed to hear</h3><ul class="l" id="ideas"></ul>
       <h3>Plain-English swaps</h3><ul class="l" id="swaps"></ul>
             <h3>Coach Mic's model answer</h3><div class="tr" id="model"></div>
@@ -138,7 +138,7 @@ footer{font-size:12px;color:var(--mut);margin-top:26px}
 </section>
 
 <footer>
-  <p>We never upload or store your audio. Your browser's built-in speech recognition turns your voice into text, and the scoring runs in your browser. Scores are practice feedback and do not predict hiring or income outcomes.</p>
+  <p>We never upload or store your audio. Your browser's built-in speech recognition turns your voice into text. To check which ideas you covered, the text of your answer (not audio) is sent to Google's Gemini AI service, and Google may use it to improve its products, so please don't include personal or client details. Scores are practice feedback and do not predict hiring or income outcomes.</p>
   <p style="margin-top:6px">© 2026 MiCreative Practice HUB™. Bookkeeper Ready™ is a trademark of MiCreative.</p>
 </footer>
 </div>
@@ -153,25 +153,25 @@ const CONFIG={
 /* ================================ */
 const SC=[
 {id:'accountant',tag:'Beginner',q:"What do you actually DO as a bookkeeper? Isn't that what my accountant does?",
- ideas:[['You record and organize day-to-day transactions',[/record|track|organi[sz]|enter|categori[sz]|sort|keep (your )?books|log/]],
+ ideas:[['You record and organize day-to-day transactions',[/record|track|organi[sz]|enter|categori[sz]|sort|\blog\b|manage|maintain|bookkeep|keep (your |the )?(\w+ )?books|daily (income|expenses|books|transactions)|day[- ]to[- ]day|data entry/]],
   ['How you differ from an accountant (taxes, strategy)',[/accountant|cpa/,/tax|strateg|advis|filing|planning|year[- ]end/]],
   ['Your work keeps numbers accurate and ready for tax time',[/accurate|clean|ready|up[- ]to[- ]date|on time|organi[sz]ed|tax time|hand (it )?(off|over)|prepar/]],
-  ['The client gets visibility into their business',[/report|cash ?flow|profit|know (where|how|what)|visibility|see (where|how)|decision/]]],
+  ['The client gets visibility into their business',[/report|cash ?flow|profit|know (where|how|what)|visibility|see (where|how)|decision|clear picture|understand your (numbers|finances|business)|see your (numbers|finances)/]]],
  model:"Great question. First, I keep your day-to-day numbers accurate: I record every sale and expense and match them to your bank. Then I'll send you simple reports, so you always know where you stand. Your accountant uses those clean numbers for taxes and bigger-picture advice. That means I keep your books clean, and they help you plan and file."},
 {id:'profit-cash',tag:'Money talk',q:"My profit looks great but my bank account is empty. What's going on?",
- ideas:[['Profit and cash are not the same thing',[/profit/,/cash|bank/,/not the same|different|isn'?t|aren'?t|doesn'?t|not cash/]],
-  ['Unpaid invoices: customers still owe you',[/unpaid|owe|invoice|receivable|haven'?t (been )?paid|waiting/]],
+ ideas:[['Profit and cash are not the same thing',[/profit/,/cash|bank|money/,/not the same|different|isn'?t|aren'?t|doesn'?t|not cash|on paper|lower than|less than|still waiting|haven'?t (received|come)/]],
+  ['Unpaid invoices: customers still owe you',[/unpaid|\bowe[sd]?\b|invoice|receivable|haven'?t (been )?paid|waiting/]],
   ['Money left for things that are not expenses (loans, owner draws, inventory)',[/draw|loan|principal|inventory|equipment|distribut|pay yourself/]],
   ['A clear next step, like a cash flow summary',[/cash ?flow (report|statement|summary|forecast)|walk (you )?through|review|look at|show you|send you/]]],
  model:"That's frustrating, and it's really common. First, profit and cash aren't the same thing. Then, because some of your sales are still unpaid invoices, that money hasn't reached your bank yet. Money also left for loan payments, owner draws or inventory, which aren't expenses. For example, the principal on a loan payment shrinks your cash but not your profit. I'll send you a simple cash flow summary so you can see exactly where each dollar went."},
 {id:'bank-access',tag:'Building trust',q:"Why do you need access to my bank account? That feels risky.",
  ideas:[['You acknowledged the concern',[/understand|makes sense|fair|valid|good question|smart|security|careful|right to ask|concern/]],
-  ['Read-only access: you cannot move money',[/read[- ]only|view[- ]only|can'?t (move|transfer|withdraw|touch)|cannot (move|transfer|withdraw)|only (see|view)/]],
-  ['Why you need it: accurate records without chasing statements',[/transaction|statement|match|record|accurate|bank feed|categori[sz]/]],
+  ['Read-only access: you cannot move money',[/read[- ]only|view[- ]only|view access|can'?t (move|transfer|withdraw|touch|take)|cannot (move|transfer|withdraw|take)|can only (see|view)|only (see|view)/]],
+  ['Why you need it: accurate records without chasing statements',[/transaction|statement|bank feed/,/accurate|record|match|categori[sz]|correct|instead of|without (asking|sending)|save you/]],
   ['The client stays in control and can remove access',[/stay in control|you control|revoke|remove (my )?access|secure|encrypted|bank[- ]grade|any ?time/]]],
  model:"That's a smart thing to ask, and I understand the concern. First, I only need read-only access, which means I can see transactions but can't move or withdraw a single dollar. Then, because I can see your transactions, I record everything accurately without asking you for statements each month. And you stay in control: you can remove my access any time."},
 {id:'value',tag:'Handling price',q:"Why should I pay you when I can just do my own books in a spreadsheet?",
- ideas:[["Their time is worth more elsewhere",[/time|hours|focus|spend|busy|your business|grow/]],
+ ideas:[["Their time is worth more elsewhere",[/time|hours|focus|spend|busy|your business|grow|weekend|off your plate|free[sd]? up/]],
   ['Small mistakes cost real money',[/mistake|error|accurate|miss|penalt|audit|duplicate|miscategori/]],
   ['Better tax and business decisions',[/tax|deduction|write[- ]?off|decision|cash ?flow|report|profit/]],
   ['A low-risk next step',[/trial|start|small|one month|clean[- ]?up|look at|review|walk|call|free|let'?s/]]],
@@ -250,30 +250,37 @@ function finish(){
 }
 
 function words(t){return t.toLowerCase().match(/[a-z']+/g)||[]}
-function analyze(text,secs,sp){
+function analyze(text,secs,sp,forced){
   text=text.replace(/[’‘]/g,"'").trim();const low=text.toLowerCase(),w=words(text),n=w.length;
   const m=re=>low.match(re)||[],fill=m(FILL),hedge=m(HEDGE),care=m(CARE),cues=new Set(m(CUES));
   const wpm=sp&&secs>3?Math.round(n/(secs/60)):0;
   const you=w.filter(x=>/^you(r|'re|'ll|rs)?$/.test(x)).length;
-  const got=S.ideas.map(([l,rs])=>rs.every(r=>r.test(low)));const cov=got.filter(Boolean).length;
+  const got=forced||S.ideas.map(([l,rs])=>rs.every(r=>r.test(low)));const cov=got.filter(Boolean).length;
   const jar=[];JARGON.forEach(([r,sw])=>{const x=r.exec(text);if(x)jar.push({term:x[0],swap:sw,explained:EXPL.test(text.slice(x.index,x.index+90))})});
   const pace=!sp||!wpm?15:(wpm>=110&&wpm<=170?20:wpm>=90&&wpm<=190?12:5),len=n>=40&&n<=140?15:n>=25&&n<=200?8:0;
   const askBack=/can i ask|may i ask|would you like|would it help|what (software|tool)/.test(low)?10:0;
   const ms=[
-   {k:'answer',label:'Answer',v:cl(cov/S.ideas.length*100),note:`${cov} of ${S.ideas.length} key ideas covered`},
+   {k:'answer',label:'Answer',v:cl(cov/S.ideas.length*100),note:`${cov} of ${S.ideas.length} key ideas covered${forced?' · AI-checked':''}`},
    {k:'clarity',label:'Clarity',v:cl(35+Math.min(30,cues.size*10)+pace+len),note:(wpm?wpm+' words/min · ':'')+cues.size+' structure word'+(cues.size===1?'':'s')},
    {k:'plain',label:'Plain English',v:cl(100-jar.reduce((a,j)=>a+(j.explained?5:14),0)),note:jar.length?jar.length+' jargon term'+(jar.length>1?'s':''):'No jargon'},
    {k:'conf',label:'Confidence',v:cl(100-hedge.length*9-fill.length*6-(n<30?20:0)-(wpm&&wpm<95?10:0)),note:(hedge.length+fill.length)+' hedge or filler phrase'+(hedge.length+fill.length===1?'':'s')+(n<30?' · short answer, aim for 40–90 words':'')},
    {k:'care',label:'Client care',v:cl(25+Math.min(35,you/n*700)+Math.min(30,care.length*15)+askBack),note:`${you} “you/your”, ${care.length} reassurance phrase${care.length===1?'':'s'}`}];
   const wt={answer:.3,clarity:.22,plain:.16,conf:.16,care:.16};
   let overall=cl(ms.reduce((a,x)=>a+x.v*wt[x.k],0));const off=cov===0,short=n<30;if(short)overall=Math.min(overall,70);if(off)overall=Math.min(overall,35);
-  return{text,ms,overall,off,short,got,jar,wpm,hedge,fill};
+  return{text,ms,overall,off,short,got,jar,wpm,hedge,fill,ai:!!forced};
 }
-function run(text,secs,sp){
+async function judge(text){
+  try{const c=new AbortController(),t=setTimeout(()=>c.abort(),9000);
+  const r=await fetch('/.netlify/functions/judge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenarioId:S.id,answer:text}),signal:c.signal});clearTimeout(t);
+  if(!r.ok)return null;const j=await r.json();
+  return Array.isArray(j.ideas)&&j.ideas.length===S.ideas.length&&j.ideas.every(x=>typeof x==='boolean')?j.ideas:null}catch{return null}}
+async function run(text,secs,sp){
   const n=words(text).length;
   if(n<12){if(sp&&lastErr&&!$('err').hidden)return;
     err(n===0&&sp?'The browser heard no speech. '+(location.protocol==='file:'?'Voice recognition usually fails on a file opened from your computer, so open this page from an https link.':'Check that the right microphone is selected in your browser settings, then try again.'):`We only caught ${n} word${n===1?'':'s'}. Try again closer to your mic, or type your answer instead.`);return}
-  R=analyze(text,secs,sp);render();show('result');track('drill_scored',{id:S.id,score:R.overall});
+  const btn=$(sp?'go':'score'),lbl=btn.textContent;btn.disabled=true;btn.textContent='Scoring…';
+  const ai=await judge(text);btn.disabled=false;btn.textContent=lbl;
+  R=analyze(text,secs,sp,ai);render();show('result');track('drill_scored',{id:S.id,score:R.overall,ai:R.ai});
 }
 const colr=v=>v>=70?'var(--ok)':v>=50?'var(--warn)':'var(--bad)';
 function render(){
@@ -307,7 +314,7 @@ $('lf').onsubmit=async e=>{
   if($('hp').value)return;
   if(name.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)||!$('ok').checked){le.hidden=false;le.textContent='Enter your first name, a valid email, and tick the box to continue.';return}
   $('lb').disabled=true;$('lb').textContent='Unlocking…';
-  const p={name,email,score:R.overall,scenario:S.id,metrics:Object.fromEntries(R.ms.map(m=>[m.k,m.v])),utm:UTM,page:location.href,ts:new Date().toISOString()};
+  const p={name,email,score:R.overall,scenario:S.id,ai:R.ai,metrics:Object.fromEntries(R.ms.map(m=>[m.k,m.v])),utm:UTM,page:location.href,ts:new Date().toISOString()};
   let sent=false;
   try{if(CONFIG.LEAD_ENDPOINT){const r=await fetch(CONFIG.LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(p)});sent=r.ok}else console.info('[Free Drill] No LEAD_ENDPOINT set. Lead saved in this browser only:',p)}catch{}
   const q=ls.get('br_leads_queue')||[];if(!sent)q.push(p);ls.set('br_leads_queue',q);
